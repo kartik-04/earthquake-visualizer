@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import useEarthquakeData from "../hooks/useEarthquakeData";
+import useEarthquakeData from "../hooks/useEarthquakeData.js";
 
 // 🧩 Set default Leaflet marker icons (fix missing images)
 delete L.Icon.Default.prototype._getIconUrl;
@@ -22,7 +22,7 @@ export default function MapView({ filters }) {
     });
 
     return (
-        <div className="flex-1 h-[calc(100vh-56px)] w-full">
+        <div className="w-full h-screen md:h-[calc(100vh-56px)] flex flex-col">
             {/* 🌍 Main Leaflet map */}
             <MapContainer
                 center={[0, 0]}
