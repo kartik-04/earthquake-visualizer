@@ -2,48 +2,35 @@ import React, { useState } from "react";
 
 export default function Navbar({ filters, onFilterChange }) {
     const [localFilters, setLocalFilters] = useState(filters);
-    const [darkMode] = useState(true);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Use parseFloat for numerical inputs to ensure correct data type if needed later
-        setLocalFilters({ ...localFilters, [name]: value === "" ? "" : parseFloat(value) });
+        setLocalFilters({ ...localFilters, [name]: value });
     };
 
     const handleApply = () => {
-        // Pass the updated filters to the parent component
-        onFilterChange(localFilters);
+        onFilterChange({
+            minMag: parseFloat(localFilters.minMag) || 0,
+            maxMag: parseFloat(localFilters.maxMag) || 10,
+            location: localFilters.location || "",
+        });
     };
 
-    // Define common classes for cleaner template
-    const primaryColor = "text-indigo-500 hover:text-indigo-400"; // Modern accent color
-    const buttonBase = "px-4 py-2 font-semibold rounded-lg transition-all duration-200 ease-in-out";
-    const inputBase = "px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-500";
-    const darkInput = "bg-gray-700 border-gray-600 text-white placeholder-gray-400";
-    const lightInput = "bg-white border-gray-300 text-gray-900 placeholder-gray-500";
-
-
     return (
-        <nav
-            className="flex justify-between items-center max-container"
-        >
-            {/* Logo / Title - Increased size and modern font tracking */}
-            <div className="text-3xl font-extrabold tracking-tight">
-                <span className={primaryColor}>🌍</span> Earthquake Visualizer
+        <nav className="flex justify-between items-center px-6 py-3 shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+            <div className="text-2xl font-bold tracking-tight">
+                🌍 Earthquake <span className="text-indigo-500">Visualizer</span>
             </div>
 
-            {/* Filter Inputs - Added gap and improved alignment */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+                {/* Min/Max Magnitude */}
                 <input
                     type="number"
                     name="minMag"
                     value={localFilters.minMag}
                     onChange={handleChange}
                     placeholder="Min Mag"
-                    min="0"
-                    max="10"
-                    step="0.1"
-                    className={`${inputBase} w-32 ${darkMode ? darkInput : lightInput}`}
+                    className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700"
                 />
                 <input
                     type="number"
@@ -51,22 +38,25 @@ export default function Navbar({ filters, onFilterChange }) {
                     value={localFilters.maxMag}
                     onChange={handleChange}
                     placeholder="Max Mag"
-                    min="0"
-                    max="10"
-                    step="0.1"
-                    className={`${inputBase} w-32 ${darkMode ? darkInput : lightInput}`}
+                    className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700"
+                />
+                <input
+                    type="text"
+                    name="location"
+                    value={localFilters.location}
+                    onChange={handleChange}
+                    placeholder="Location"
+                    className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700"
                 />
 
                 <button
                     onClick={handleApply}
-                    // Modern button style: Indigo background, slight lift on hover
-                    className={`${buttonBase} bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg`}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md shadow-md"
                 >
-                    Apply Filter
+                    Apply
                 </button>
-            </div>
 
-            {/* Dark Mode Toggle - Cleaner, more prominent button */}
+            </div>
         </nav>
     );
 }
