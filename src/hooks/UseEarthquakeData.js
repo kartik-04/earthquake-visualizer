@@ -1,25 +1,23 @@
-import {useEffect, useState, useRef, useCallback} from "react";
+// src/hooks/useEarthquakeData.js
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const API_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
-/**
- * Custom hook to fetch and auto-refresh earthquake data.
- * Handles errors, loading, and optional filters.
- */
 export default function useEarthquakeData({ magnitudeFilter, locationFilter, refreshInterval = 15000 } = {}) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const timeoutRef = useRef(null);
 
-    // Helper: filter earthquakes based on magnitude and location
-    const applyFilters = (features) => {
+    const applyFilters = useCallback((features) => {
         return features.filter((feature) => {
             const { mag, place } = feature.properties;
 
             const magnitudePass =
                 !magnitudeFilter ||
-                (mag !== null && mag >= magnitudeFilter.min && mag <= magnitudeFilter.max);
+                (mag !== null &&
+                    mag >= Number(magnitudeFilter.min || 0) &&
+                    mag <= Number(magnitudeFilter.max || 10));
 
             const locationPass =
                 !locationFilter ||
@@ -27,7 +25,7 @@ export default function useEarthquakeData({ magnitudeFilter, locationFilter, ref
 
             return magnitudePass && locationPass;
         });
-    };
+    }, [magnitudeFilter, locationFilter]);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
@@ -43,24 +41,20 @@ export default function useEarthquakeData({ magnitudeFilter, locationFilter, ref
 
             setData(filtered);
         } catch (err) {
-            console.error(err);
+            console.error("⚠️ Fetch error:", err.message);
             setError(err.message);
         } finally {
             setLoading(false);
-
-            // Recursive auto-refresh
             timeoutRef.current = setTimeout(fetchData, refreshInterval);
         }
-    });
+    }, [applyFilters, refreshInterval]);
 
     useEffect(() => {
-        fetchData(); // Initial fetch
-
-        // Cleanup on unmounted or filter change
+        fetchData();
         return () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
-    }, [magnitudeFilter, locationFilter, fetchData]);
+    }, [fetchData]);
 
-    return { data, loading, error, refetch: fetchData };
+    return { data, loading, error };
 }

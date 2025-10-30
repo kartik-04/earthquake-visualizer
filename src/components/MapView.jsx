@@ -28,6 +28,7 @@ export default function MapView() {
     }
 
     return (
+        <>
         <div className="flex-1 h-[calc(100vh-56px)] w-full">
             <MapContainer
                 center={[0, 0]}
@@ -88,5 +89,6 @@ export default function MapView() {
                 })}
             </MapContainer>
         </div>
+        </>
     );
 }

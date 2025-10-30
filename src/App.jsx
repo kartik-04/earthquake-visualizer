@@ -1,24 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Navbar from "./components/Navbar.jsx";
 import MapView from "./components/MapView";
-import FilterBar from "./components/FilterBar";
+
 
 export default function App() {
-    return (
-        <div className="h-screen flex flex-col">
-            {/* Header */}
-            <header className="bg-gray-800 text-white text-center py-3 text-xl font-semibold">
-                🌍 Earthquake Visualizer
-            </header>
+    // central filter state
+    const [filters, setFilters] = useState({
+        minMag: 0,
+        maxMag: 10,
+        location: ""
+    });
 
-            {/* Main content: sidebar + map */}
-            <main className="flex flex-1 overflow-hidden">
-                <aside className="hidden md:block w-1/4 bg-gray-100 border-r">
-                    <FilterBar />
-                </aside>
-                <section className="flex-1">
-                    <MapView />
-                </section>
-            </main>
+    // global dark mode state
+    const [darkMode, setDarkMode] = useState(true);
+
+    // Sync dark mode to the <html> or <body> class so Tailwind 'dark:' utilities work.
+    useEffect(() => {
+        const root = document.documentElement; // html element
+        if (darkMode) root.classList.add("dark");
+        else root.classList.remove("dark");
+    }, [darkMode]);
+
+    return (
+        <div className="flex flex-col h-screen w-full bg-white dark:bg-gray-900">
+            <Navbar
+                filters={filters}
+                onFilterChange={setFilters}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+            />
+
+            {/* Map should occupy the remaining space */}
+            <div className="flex-1 min-h-0">
+                <MapView filters={filters} darkMode={darkMode} />
+            </div>
         </div>
     );
 }
