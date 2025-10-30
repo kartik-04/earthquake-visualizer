@@ -2,8 +2,8 @@ import React from "react";
 import formatTime from "../utils/formatTime";
 
 export default function MarkerPopup({ quake }) {
-    // Skip unused lon/lat to avoid ESLint `no-unused-vars` warnings
-    const [, , depth] = quake.geometry.coordinates;
+    // Extract earthquake info
+    const [, , depth] = quake.geometry.coordinates; // ignore lon/lat here
     const { mag, place, time } = quake.properties;
 
     return (

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
 export default function FilterBar({ onFilterChange }) {
+    // 🧮 Local filter state
     const [minMag, setMinMag] = useState(0);
     const [maxMag, setMaxMag] = useState(10);
     const [location, setLocation] = useState("");
 
+    // 🔘 Apply filters and pass to parent
     const handleApply = () => {
         onFilterChange({
             magnitudeFilter: { min: parseFloat(minMag), max: parseFloat(maxMag) },
@@ -16,7 +18,7 @@ export default function FilterBar({ onFilterChange }) {
         <div className="bg-gray-100 p-4 h-full flex flex-col">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">Filters</h2>
 
-            {/* Magnitude Range */}
+            {/* 🔹 Magnitude range inputs */}
             <div className="mb-4">
                 <label className="block text-sm text-gray-600 mb-1">Min Magnitude</label>
                 <input
@@ -43,7 +45,7 @@ export default function FilterBar({ onFilterChange }) {
                 />
             </div>
 
-            {/* Location Filter */}
+            {/* 🔹 Location input */}
             <div className="mb-4">
                 <label className="block text-sm text-gray-600 mb-1">Location</label>
                 <input
@@ -55,6 +57,7 @@ export default function FilterBar({ onFilterChange }) {
                 />
             </div>
 
+            {/* 🔘 Apply button */}
             <button
                 onClick={handleApply}
                 className="mt-auto bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"

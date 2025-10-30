@@ -1,4 +1,4 @@
-// Converts a timestamp to a readable format like "Oct 30, 2025, 5:45 AM"
+// 🕓 Converts an earthquake timestamp into a readable format (e.g. "Oct 30, 2025, 05:45 AM")
 export default function formatTime(timestamp) {
     if (!timestamp) return "Unknown";
     try {

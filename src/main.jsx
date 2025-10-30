@@ -1,7 +1,8 @@
+// ✅ React entry file — bootstraps the entire app.
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "./index.css"; // ✅ This must be imported here!
+import "./index.css"; // Global styles and Tailwind imports must be here.
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>

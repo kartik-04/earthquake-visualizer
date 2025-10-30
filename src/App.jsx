@@ -3,17 +3,17 @@ import Navbar from "./components/Navbar";
 import MapView from "./components/MapView";
 
 export default function App() {
-    // central filter state
+    // 🔹 Central filter state for controlling map data
     const [filters, setFilters] = useState({
         minMag: 0,
         maxMag: 10,
         location: "",
     });
 
-    // global dark mode state
+    // 🔹 Global dark mode toggle
     const [darkMode, setDarkMode] = useState(true);
 
-    // Tailwind dark mode sync
+    // 🌓 Sync Tailwind's "dark" class with React state
     useEffect(() => {
         const root = document.documentElement;
         if (darkMode) root.classList.add("dark");
@@ -22,6 +22,7 @@ export default function App() {
 
     return (
         <div className="flex flex-col h-screen w-full bg-white dark:bg-gray-900">
+            {/* Navbar: controls filters and theme */}
             <Navbar
                 filters={filters}
                 onFilterChange={setFilters}
@@ -29,7 +30,7 @@ export default function App() {
                 setDarkMode={setDarkMode}
             />
 
-            {/* Map fills remaining space */}
+            {/* MapView takes up the remaining space */}
             <div className="flex-1 min-h-0">
                 <MapView filters={filters} darkMode={darkMode} />
             </div>
