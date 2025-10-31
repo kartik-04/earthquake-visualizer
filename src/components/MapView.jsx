@@ -22,7 +22,7 @@ export default function MapView({ filters }) {
     });
 
     return (
-        <div className="w-full h-screen md:h-[calc(100vh-56px)] flex flex-col">
+        <div className="w-full h-full md:h-[calc(100vh-56px)] flex flex-col">
             {/* 🌍 Main Leaflet map */}
             <MapContainer
                 center={[0, 0]}
