@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 
+/**
+ * FilterBar - UI component for filtering earthquake data
+ * @param {Function} onFilterChange - Callback when filters are applied
+ */
 export default function FilterBar({ onFilterChange }) {
-    // 🧮 Local filter state
+    // Local state for filter values
     const [minMag, setMinMag] = useState(0);
     const [maxMag, setMaxMag] = useState(10);
     const [location, setLocation] = useState("");
 
-    // 🔘 Apply filters and pass to parent
+    // Apply current filters and notify parent
     const handleApply = () => {
         onFilterChange({
-            magnitudeFilter: { min: parseFloat(minMag), max: parseFloat(maxMag) },
+            magnitudeFilter: { 
+                min: parseFloat(minMag) || 0, 
+                max: parseFloat(maxMag) || 10 
+            },
             locationFilter: location.trim(),
         });
     };

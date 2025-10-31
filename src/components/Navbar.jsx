@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 
+/**
+ * Navbar - Top navigation bar with filter controls
+ * @param {Object} filters - Current filter values
+ * @param {Function} onFilterChange - Callback when filters are applied
+ */
 export default function Navbar({ filters, onFilterChange }) {
+    // Local state for form inputs
     const [localFilters, setLocalFilters] = useState(filters);
 
-    // 🔸 Local input change handler
+    // Handle input changes and update local state
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setLocalFilters({ ...localFilters, [name]: value });
+        setLocalFilters(prev => ({ ...prev, [name]: value }));
     };
 
-    // 🔸 Applies filters to parent state
+    // Validate and apply filters to parent component
     const handleApply = () => {
         onFilterChange({
             minMag: parseFloat(localFilters.minMag) || 0,
