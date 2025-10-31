@@ -19,8 +19,7 @@ export default function Navbar({ filters, onFilterChange }) {
     };
 
     return (
-        <nav className="flex justify-between items-center px-6 py-3 shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-            {/* 🔹 App Title */}
+        <nav className="flex justify-between items-center px-6 py-3 shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 relative z-[1000]">            {/* 🔹 App Title */}
             <div className="text-2xl font-bold tracking-tight">
                 🌍 Earthquake <span className="text-indigo-500">Visualizer</span>
             </div>
