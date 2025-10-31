@@ -21,7 +21,7 @@ export default function App() {
     }, [darkMode]);
 
     return (
-        <div className="flex flex-col h-screen w-full bg-white dark:bg-gray-900">
+        <div className="flex flex-col h-screen w-full bg-white dark:bg-gray-900 pt-[64px]">
             {/* Navbar: controls filters and theme */}
             <Navbar
                 filters={filters}
